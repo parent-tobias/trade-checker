@@ -63,6 +63,8 @@
     /****
      * And here's where the magic ends. ;)
      */
+    let completedOrders = transObjects.filter(transaction=>transaction.Status!=="REJECTED");
+    console.log(completedOrders);
   }
 
   const errorHandler = (e) => {
