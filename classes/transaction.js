@@ -32,15 +32,15 @@ export default class Transaction {
     return Number(this.quantity)*Number(this.averagePrice);
   }
   get brokerage(){
-    return this.gross*.01 > 20 ? 20 : this.gross*.01;
+    return this.gross*.0001 > 20 ? 20 : this.gross*.0001;
   }
   get STT(){
-    return (this.isSellOrder&&this.isComplete) ? this.gross*.025 : 0;
+    return (this.isSellOrder&&this.isComplete) ? this.gross*.00025 : 0;
   }
   get transactionFee(){
     // At this point, there's a question of NSE or BSE.
-    const NSE = .00325;
-    const BSE = .003;
+    const NSE = .0000325;
+    const BSE = .00003;
     return this.gross*NSE;
   }
   get GST(){
@@ -55,7 +55,7 @@ export default class Transaction {
     return 0;
   }
   get totalFees(){
-    return this.brokerage + this.STT + this.transactionFee + this.GST + this.SEBI + this.stampCharge;
+    return this.brokerage + this.STT + this.transactionFee + this.GST + /* this.SEBI + */ this.stampCharge;
   }
   get net(){
     return this.gross - this.totalFees;
