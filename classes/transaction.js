@@ -47,7 +47,7 @@ export default class Transaction {
     return (this.brokerage+this.transactionFee)*.18;
   }
   get SEBI(){
-    return 10;
+    return 0.0000001*this.gross //  10;
   }
   get stampCharge(){
     // This is stubbed in so it doesn't crash, but we need to figure this,
@@ -55,7 +55,7 @@ export default class Transaction {
     return 0;
   }
   get totalFees(){
-    return this.brokerage + this.STT + this.transactionFee + this.GST + /* this.SEBI + */ this.stampCharge;
+    return this.brokerage + this.STT + this.transactionFee + this.GST + this.SEBI +  this.stampCharge;
   }
   get net(){
     return this.gross - this.totalFees;
