@@ -16,6 +16,13 @@ export default class Position {
   get instrument(){
     return this.state.instrument;
   }
+  get transactions(){
+    return this.state.transactions;
+  }
+  // This is no longer a "getter" in the sense of the others...
+  transaction(dateStamp){
+    return this.transactions.find(transaction => transaction.time == dateStamp);
+  }
   get gross(){
     return this.state.transactions.reduce(sumBy("gross"), 0);
   }

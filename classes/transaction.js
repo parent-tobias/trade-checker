@@ -66,4 +66,7 @@ export default class Transaction {
   get isSellOrder(){
     return this.state.type === "SELL";
   }
+  get time(){
+    return this.state.time;
+  }
 }
