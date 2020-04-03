@@ -1,4 +1,8 @@
-let transObjects;
+import Transaction from './classes/transaction.js';
+import Position from './classes/position.js';
+
+window.transObjects = undefined;
+
 
   //
   document.getElementById('input').addEventListener('change', (e) => {
@@ -54,20 +58,31 @@ let transObjects;
     const transactions = result.split(/\n/);
     const keys = transactions.shift().split(",");
     console.log(keys);
-    transObjects = transactions.map(transaction=>{
+    window.transObjects = transactions.map(transaction=>{
       const transArr = transaction.split(",");
       const transObj = {};
       keys.forEach((key, index)=>transObj[key]=transArr[index]);
-      return transObj;
+      return new Transaction(transObj);
     })
 
     /****
      * And here's where the magic ends. ;)
      */
-    let completedOrders = transObjects.filter(transaction=>transaction.Status!=="REJECTED");
+    let completedOrders = transObjects.filter(transaction=>!transaction.isComplete);
 
-    const groupByInstrument = groupBy("Instrument");
-    console.log(completedOrders.reduce(groupByInstrument, {}) );  }
+    const isComplete = transaction => transaction.isComplete;
+    const groupByInstrument = groupBy("instrument");
+    
+    const completedObject = transObjects.filter(isComplete).reduce(groupByInstrument, {});
+    console.log(Object.keys(completedObject) );
+    window.positions = Object.keys(completedObject).map( instrument =>{
+      console.log(instrument, completedObject[instrument])
+      return new Position({
+      instrument, 
+      transactions: completedObject[instrument].transactions
+    })
+  })
+  }
 
   const errorHandler = (e) => {
     changeStatus("Error: " + e.target.error.name)
