@@ -1,3 +1,4 @@
+let transObjects;
 
   //
   document.getElementById('input').addEventListener('change', (e) => {
@@ -53,21 +54,27 @@
     const transactions = result.split(/\n/);
     const keys = transactions.shift().split(",");
     console.log(keys);
-    const transObjects = transactions.map(transaction=>{
+    transObjects = transactions.map(transaction=>{
       const transArr = transaction.split(",");
       const transObj = {};
       keys.forEach((key, index)=>transObj[key]=transArr[index]);
       return transObj;
     })
-    console.log(transObjects);
+
     /****
      * And here's where the magic ends. ;)
      */
     let completedOrders = transObjects.filter(transaction=>transaction.Status!=="REJECTED");
-    console.log(completedOrders);
-  }
+
+    const groupByInstrument = groupBy("Instrument");
+    console.log(completedOrders.reduce(groupByInstrument, {}) );  }
 
   const errorHandler = (e) => {
     changeStatus("Error: " + e.target.error.name)
   }
 
+const groupBy = (prop) => (obj, rec)=>{
+  obj[rec[prop]] = obj[rec[prop]] || { transactions: []};
+  obj[rec[prop]].transactions.push(rec);
+  return obj;
+}
