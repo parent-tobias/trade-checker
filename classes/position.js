@@ -3,7 +3,7 @@ import Transaction from './transaction.js';
 // a utility function we can use to total each property as we want.
 const sumBy = prop => (total, transaction) => transaction.isSellOrder ? total + transaction[prop] : total - transaction[prop];
 const absoluteSum = prop => (total, transaction) => total + transaction[prop];
-const toPrecision = precision => num => Math.round(num*(Math.pow(10, precision))/Math.pow(10, precision));
+const toPrecision = precision => num => Math.round(num*(Math.pow(10, precision)))/Math.pow(10, precision);
 const currency = toPrecision(2);
 
 export default class Position {
