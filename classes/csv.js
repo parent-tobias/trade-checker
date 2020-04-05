@@ -17,7 +17,7 @@ export default class CSV {
   toFile(fieldOrderArray, arrayOfObjects, fileName){
     const contents = this.toString(fieldOrderArray, arrayOfObjects);
 
-    const csvFile = new Blob([contents], {ype: "text/csv"});
+    const csvFile = new Blob([contents], {type: "text/csv"});
     const linkEl = document.createElement("a");
     linkEl.download=fileName;
     linkEl.href=window.URL.createObjectURL(csvFile);
