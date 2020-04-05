@@ -1,4 +1,4 @@
-export default class Transaction {
+export default class Order {
   constructor({
     "Time"        : time,
     "Type"        : type,
