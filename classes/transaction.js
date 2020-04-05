@@ -60,8 +60,14 @@ export default class Transaction {
   get net(){
     return this.gross - this.totalFees;
   }
+  get status(){
+    return this.state.status;
+  }
+  get type(){
+    return this.state.type;
+  }
   get isComplete(){
-    return this.state.status === "COMPLETE";
+    return this.status === "COMPLETE";
   }
   get isSellOrder(){
     return this.state.type === "SELL";
