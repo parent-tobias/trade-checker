@@ -15,7 +15,7 @@ export default class Activity {
         instrument, 
         orders: tradingActivityObject[instrument].data
       })
-    })
+    }).filter(instrument=>instrument.traded!==0);
 
     this.state = {
       orders,
@@ -33,5 +33,8 @@ export default class Activity {
   }
   instrument(value){
     return this.instruments.find(instrument => instrument.instrument === value)
+  }
+  get positions(){
+    return this.instruments.reduce((array, instrument)=>[...array, ...instrument.positions ], []);
   }
 }

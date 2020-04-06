@@ -30,8 +30,21 @@ export default class Position {
     return this.trades.filter(filterBy("time")(time)).length > 0;
   }
 
+  get instrument(){
+    return this.trades[0].instrument;
+  }
+
   get quantity(){
     return this.trades.reduce(sumBy("quantity"), 0);
+  }
+  get traded(){
+    return this.trades.filter(filterBy("type")("SELL")).reduce(absoluteSum("quantity"), 0);
+  }
+  get opened(){
+    return this.trades[0].time;
+  }
+  get closed(){
+    return this.trades[this.trades.length-1].time;
   }
   // Returns completed orders (so non-rejected or non-cancelled)
   get trades(){
@@ -68,4 +81,7 @@ export default class Position {
   get net(){
     return currency( this.trades.reduce(sumBy("net"), 0) );
   }  
+  get profitLoss(){
+
+  }
 }

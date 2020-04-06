@@ -50,8 +50,11 @@ export default class Instrument {
   order(dateStamp){
     return this.orders.find(order => order.time == dateStamp);
   }
+  get traded(){
+    return this.positions.reduce(absoluteSum("traded"), 0);
+  }
   get gross(){
-    return currency( this.positions.reduce(sumBy("gross"), 0) );
+    return currency( this.positions.reduce(absoluteSum("gross"), 0) );
   }
   get brokerage(){
     return currency( this.positions.reduce(absoluteSum("brokerage"), 0) );
@@ -75,6 +78,6 @@ export default class Instrument {
     return currency( this.positions.reduce(absoluteSum("totalFees"), 0) )
   }
   get net(){
-    return currency( this.positions.reduce(sumBy("net"), 0) );
+    return currency( this.positions.reduce(absoluteSum("net"), 0) );
   }  
 }

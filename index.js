@@ -9,12 +9,29 @@ window.csvConverter = new CSV();
     const file = document.getElementById('input').files[0];
     if (file) {
       processFile(file);
-      const saveFileBtn = document.createElement("button");
-      saveFileBtn.textContent="Download all";
-      saveFileBtn.addEventListener("click", (e)=>{
-        csvConverter.toFile(["instrument","time","type","status","averagePrice","quantity","gross","brokerage","transactionFee","GST","SEBI","stampCharge","totalFees","net"], activity.trades, "foobaz.csv");
+
+      const saveTradesBtn = document.createElement("button");
+      saveTradesBtn.textContent="Download all trades";
+      saveTradesBtn.addEventListener("click", (e)=>{
+        csvConverter.toFile(["instrument","time","type","status","averagePrice","quantity","gross","totalFees","net"], activity.trades, "trades.csv");
       })
-      document.querySelector("#status").appendChild(saveFileBtn);
+      document.querySelector("#status").appendChild(saveTradesBtn);
+
+      const savePositionsBtn = document.createElement("button");
+      savePositionsBtn.textContent="Download Summary by Position";
+      savePositionsBtn.addEventListener("click", (e)=>{
+        csvConverter.toFile(["instrument","traded","gross","totalFees","net","opened","closed"], activity.positions, "positions.csv");
+      })
+      document.querySelector("#status").appendChild(savePositionsBtn);
+
+      const saveByInstrument = document.createElement("button");
+      saveByInstrument.textContent="Download Summary By Instrument";
+      saveByInstrument.addEventListener("click", (e)=>{
+        csvConverter.toFile(["instrument","traded","gross","totalFees","net"], activity.instruments, "instruments.csv");
+      })
+      document.querySelector("#status").appendChild(saveByInstrument);
+
+
     }
   })
 

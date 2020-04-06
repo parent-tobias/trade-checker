@@ -4,7 +4,7 @@
 const sumBy = prop => (total, order) => order.isSellOrder 
    ? Number(total) + Number(order[prop]) 
    : Number(total) - Number(order[prop]);
-const absoluteSum = prop => (total, order) => total + order[prop];
+const absoluteSum = prop => (total, obj) => Number(total) + Number(obj[prop]);
 const toPrecision = precision => num => Math.round(num*(Math.pow(10, precision)))/Math.pow(10, precision);
 const currency = toPrecision(2);
 
