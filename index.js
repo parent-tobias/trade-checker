@@ -4,6 +4,15 @@ import Activity from './classes/activity.js';
 window.instruments = undefined;
 window.csvConverter = new CSV();
 
+const stateEl = document.querySelector("select[name='state-choice'")
+// If we have a value stored in localStorage, use it:
+if(localStorage.getItem("stateChoice")){
+  stateEl.querySelector(`option[value='${localStorage.getItem("stateChoice")}']`).selected=true;
+}
+stateEl.addEventListener("change", (e)=>{
+  let select = e.target;
+  localStorage.setItem("stateChoice", select.options[select.selectedIndex].value);
+})
   //
   document.getElementById('input').addEventListener('change', (e) => {
     const file = document.getElementById('input').files[0];

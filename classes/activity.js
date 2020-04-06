@@ -2,10 +2,12 @@ import Order from './order.js';
 import Instrument from './instrument.js';
 import {filterBy, sortBy, groupBy} from '../utilities/array.js';
 
+const stateChoice = localStorage.getItem("stateChoice") || "Other";
+
 export default class Activity {
   constructor(orders){
     orders = orders.map(order=>{
-      return new Order(order);
+      return new Order(order, stateChoice);
     })
 
     const groupByInstrument = groupBy("instrument");
