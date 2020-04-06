@@ -1,11 +1,13 @@
+import { currency } from '../utilities/number.js';
+
 export default class Order {
   constructor({
     "Time"        : time,
     "Type"        : type,
     "Instrument"  : instrument,
     "Product"     : product,
-    "Qty."        : qty,
-    "Avg. price"  : avgPrice,
+    "Qty."        : qty=0,
+    "Avg. price"  : avgPrice=0,
     "Status"      : status
   }){
     // We'll fake it like it's react, as this is the state of our class. 
@@ -35,7 +37,7 @@ export default class Order {
     return this.gross*.0001 > 20 ? 20 : this.gross*.0001;
   }
   get STT(){
-    return (this.isSellOrder&&this.isComplete) ? this.gross*.00025 : 0;
+    return (this.isSellOrder&&this.isComplete) ? this.gross*.00025 : 0 ;
   }
   get transactionFee(){
     // At this point, there's a question of NSE or BSE.
@@ -47,7 +49,7 @@ export default class Order {
     return (this.brokerage+this.transactionFee)*.18;
   }
   get SEBI(){
-    return 0.000001*this.gross //  10;
+    return 0.000001*this.gross;
   }
   get stampCharge(){
     // This is stubbed in so it doesn't crash, but we need to figure this,
@@ -58,7 +60,7 @@ export default class Order {
     return this.brokerage + this.STT + this.transactionFee + this.GST + this.SEBI +  this.stampCharge;
   }
   get net(){
-    return this.gross - this.totalFees;
+    return currency(this.gross - this.totalFees);
   }
   get status(){
     return this.state.status;
