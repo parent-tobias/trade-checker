@@ -43,8 +43,12 @@ myActivity.instrument(String)
 
 // Get all the Position objects, regardless of Instrument
 myActivity.positions
+```
+From the Activity object, we can get access to Instruments, Positions, Orders and Trades (a filtered set of Orders).
 
-// Further, there is an API for the Instrument object:
+Unique to the Instrument objects:
+```
+// Find a specific Instrument
 const myInstrument = myActivity.instrument("ITC");
 
 // Get the name of the current Instrument
@@ -63,11 +67,14 @@ myInstrument.positions
 myInstrument.position(DateStamp)
 myInstrument.order(DateStamp)
 
-// Retrieve a count of traded shares in this Position. In the 
-//   above example, though 300 units were moved, there were 150
-//   traded shares - bought once and sold once.
+// Retrieve a count of all traded shares in this Instrument.  
+//   In the above example, though 300 units were moved, there 
+//   were 150 traded shares - bought once and sold once.
 myInstrument.traded
+```
+Now, from Instruments, through Positions, and down to Orders/Trades, we have a number of common interface properties. In the case of Instruments or Positions, these provide totals for the contained Orders/trades.
 
+```
 // The following are common to Instrument, Position and Order
 //   classes. The first three provide a summary detail...
 myInstrument.gross
@@ -81,7 +88,10 @@ myInstrument.SEBI
 myInstrument.STT
 myInstrument.GST
 myInstrument.stampCharge
+```
 
+Getting back into specific classes, Positions have a few unique properties or methods:
+```
 // In addition to those common functions, Position objects have a couple unique properties.
 const myPosition = myInstrument.positions[0] // It's just an array
 
@@ -100,12 +110,16 @@ myPosition.instrument // Name of Instrument containing this
 myPosition.traded     // Number of traded shares
 myPosition.opened     // Timestamp of the opening order
 myPosition.closed     // Timestamp of the closing order
+```
 
+And the Order object, which is the most atomic part of this whole thing. In addition to the common methods, the Order contains two more properties, which are used to calculate the .gross property.
+```
 // And on the Order object, there are a couple unique properties
 const myTrade = myPosition.trade("04-04-2020 10:35:00.000");
 
 // In addition to the common properties above, we also have
 myTrade.quantity
 myTrade.averagePrice
-
 ```
+
+This should allow us reporting at almost any level. We can provide this data for output to a CSV file, or displayed to any level of specifificity.
