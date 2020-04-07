@@ -123,3 +123,7 @@ myTrade.averagePrice
 ```
 
 This should allow us reporting at almost any level. We can provide this data for output to a CSV file, or displayed to any level of specifificity.
+
+---
+
+**Important note**: Largely to myself. At the Order level, the net is the gross less the fees. But that doesn't work in the Positions or Trades, as the fees are being charged differently for buying or selling. So you can't look at the positions output and expect the gross-totalFees to equal net. It just won't. Spent 45 minutes trying to track down that bug, only to find it was exactly right.
