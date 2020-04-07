@@ -8,7 +8,7 @@ export default class Activity {
   constructor(orders){
     orders = orders.map(order=>{
       return new Order(order, stateChoice);
-    })
+    }).sort(sortBy("time"));
 
     const groupByInstrument = groupBy("instrument");
     const tradingActivityObject = orders.reduce(groupByInstrument, {});

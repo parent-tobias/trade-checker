@@ -81,7 +81,4 @@ export default class Position {
   get net(){
     return currency( this.trades.reduce(sumBy("net"), 0) );
   }  
-  get profitLoss(){
-
-  }
 }
