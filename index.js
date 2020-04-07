@@ -1,8 +1,11 @@
-import CSV from './classes/csv.js';
+import CSV from './utilities/csv.js';
 import Activity from './classes/activity.js';
+import ReportGenerator from './classes/report-generator.js';
 
 window.instruments = undefined;
 window.csvConverter = new CSV();
+
+const reportGenerator = new ReportGenerator(csvConverter);
 
 const stateEl = document.querySelector("select[name='state-choice'")
 // If we have a value stored in localStorage, use it:
@@ -22,21 +25,21 @@ stateEl.addEventListener("change", (e)=>{
       const saveTradesBtn = document.createElement("button");
       saveTradesBtn.textContent="Download all trades";
       saveTradesBtn.addEventListener("click", (e)=>{
-        csvConverter.toFile(["instrument","time","type","status","averagePrice","quantity","gross","totalFees","net"], activity.trades, "trades.csv");
+        reportGenerator.allTrades(activity);
       })
       document.querySelector("#status").appendChild(saveTradesBtn);
 
       const savePositionsBtn = document.createElement("button");
       savePositionsBtn.textContent="Download Summary by Position";
       savePositionsBtn.addEventListener("click", (e)=>{
-        csvConverter.toFile(["instrument","traded","gross","totalFees","net","opened","closed"], activity.positions, "positions.csv");
+        reportGenerator.allPositions(activity);
       })
       document.querySelector("#status").appendChild(savePositionsBtn);
 
       const saveByInstrument = document.createElement("button");
       saveByInstrument.textContent="Download Summary By Instrument";
       saveByInstrument.addEventListener("click", (e)=>{
-        csvConverter.toFile(["instrument","traded","gross","totalFees","net"], activity.instruments, "instruments.csv");
+        reportGenerator.allInstruments(activity);
       })
       document.querySelector("#status").appendChild(saveByInstrument);
 
